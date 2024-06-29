@@ -43,7 +43,7 @@ public class SecurityConfig {
                     c.anyRequest().authenticated();
 
                 }).httpBasic(Customizer.withDefaults());
-        http.securityMatcher("/driver/login","/driver/transactions","/driver/withdraw");
+        http.securityMatcher("/driver/login","/driver/transactions","/driver/withdraw","/message");
         http.userDetailsService(new DriverUserDetailsManager(driverDao));
 
         return http.build();
