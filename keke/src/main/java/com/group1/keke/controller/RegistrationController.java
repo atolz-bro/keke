@@ -4,6 +4,7 @@ import com.group1.keke.dao.DriverDao;
 import com.group1.keke.model.Driver;
 import com.group1.keke.model.Student;
 import com.group1.keke.dao.StudentDao;
+import com.group1.keke.security.SecurityConfig;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +34,7 @@ public class RegistrationController {
         return ResponseEntity.ok(studentFromDb);
     }
 
-    @PostMapping("/register/driver")
+    @PostMapping(SecurityConfig.DRIVER_REGISTER_URL)
     public ResponseEntity<Driver> registerDriver(@RequestBody Driver driver){
         driverDao.addNewDriver(driver);
         Driver driverFromDb;

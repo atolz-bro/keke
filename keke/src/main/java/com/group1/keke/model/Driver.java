@@ -1,6 +1,7 @@
 package com.group1.keke.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,20 +11,24 @@ import jakarta.persistence.Id;
 public class Driver{
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    String username;
+
     String plate_no;
+    String password;
+    String username;
     String phone_no;
 
     String email;
 
-    String password;
+
 
     String acct_bal;
 
+    @JsonIgnore
     public Long getId() {
         return id;
     }
 
+    @JsonIgnore
     public String getAcct_bal() {
         return acct_bal;
     }

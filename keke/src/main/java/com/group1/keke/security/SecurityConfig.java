@@ -12,6 +12,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+    public static final String DRIVER_REGISTER_URL = "/driver/register";
+
     @Autowired
     StudentDao studentDao;
 

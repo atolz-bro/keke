@@ -1,5 +1,4 @@
 package com.group1.keke.controller;
-
 import com.group1.keke.dao.DriverDao;
 import com.group1.keke.dao.DriverTransactionDao;
 import com.group1.keke.model.Driver;
@@ -29,8 +28,8 @@ public class DriverController {
     }
 
     @GetMapping("/driver/login")
-    ResponseEntity<Driver> login(Principal principal){
-        String plate_no = principal.getName() ;
+    ResponseEntity<Driver> login(Principal principal) {
+        String plate_no = principal.getName();
         Driver driver = driverDao.findDriverByPlate_no(plate_no);
         return ResponseEntity.ok(driver);
     }
