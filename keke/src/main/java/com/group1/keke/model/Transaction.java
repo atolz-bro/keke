@@ -1,5 +1,6 @@
 package com.group1.keke.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,25 +8,36 @@ import jakarta.persistence.Id;
 
 @Entity(name = "Transaction")
 public class Transaction {
+
+    @JsonIgnore
     @Id() @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
     String type;
 
+    @JsonIgnore
     String student_id;
 
     String amount;
     String date;
 
-    String ben;
+    String beneficiary;
 
 
-    public Transaction(String ben,String type, String student_id, String amount, String date) {
-        this.ben = ben;
+    public Transaction(String beneficiary, String type, String student_id, String amount, String date) {
+        this.beneficiary = beneficiary;
         this.type = type;
         this.student_id = student_id;
         this.amount = amount;
         this.date = date;
+    }
+
+    public String getBeneficiary() {
+        return beneficiary;
+    }
+
+    public void setBeneficiary(String beneficiary) {
+        this.beneficiary = beneficiary;
     }
 
     public Transaction() {
@@ -70,11 +82,11 @@ public class Transaction {
     @Override
     public String toString() {
         return "Transaction{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", student_Id='" + student_id + '\'' +
+                "type='" + type + '\'' +
+                ", student_id='" + student_id + '\'' +
                 ", amount='" + amount + '\'' +
                 ", date='" + date + '\'' +
+                ", beneficiary='" + beneficiary + '\'' +
                 '}';
     }
 }

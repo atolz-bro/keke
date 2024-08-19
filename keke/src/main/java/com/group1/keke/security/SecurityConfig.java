@@ -32,7 +32,7 @@ public class SecurityConfig {
                     c.anyRequest().authenticated();
 
                 }).httpBasic(Customizer.withDefaults());
-        http.securityMatcher("/student/login","/student/fundwallet","/student/transfer","/student/transactions");
+        http.securityMatcher("/student/fundwallet","/student/transfer","/student/transactions","/student/message","/student/balance","student/details");
         http.userDetailsService(new StudentUserDetailsManager(studentDao));
 
         return http.build();
@@ -45,7 +45,7 @@ public class SecurityConfig {
                     c.anyRequest().authenticated();
 
                 }).httpBasic(Customizer.withDefaults());
-        http.securityMatcher("/driver/login","/driver/transactions","/driver/withdraw","/message");
+        http.securityMatcher("/driver/transactions","/driver/withdraw","/driver/message","/driver/balance");
         http.userDetailsService(new DriverUserDetailsManager(driverDao));
 
         return http.build();

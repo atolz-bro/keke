@@ -1,8 +1,6 @@
 package com.group1.keke.dao;
 
-import com.group1.keke.model.Student;
 import com.group1.keke.model.Transaction;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -25,12 +23,12 @@ public class StudentTransactionDao {
     }
 
     @Transactional
-    public List<Transaction> getStudentTransactionsByMatric_No(String matric_no){
+    public List<Transaction> getStudentTransactionsByStudentId(String student_id){
         List<Transaction> transactions;
         TypedQuery<Transaction> transactionTypedQuery = entityManager.createQuery(
-                "FROM Transaction WHERE student_id= :matric_no",Transaction.class
+                "FROM Transaction WHERE student_id= :student_id",Transaction.class
         );
-        transactionTypedQuery.setParameter("matric_no",matric_no);
+        transactionTypedQuery.setParameter("student_id",student_id);
 
         transactions = transactionTypedQuery.getResultList();
         System.out.println(transactions+" size: "+transactions.size());

@@ -50,4 +50,15 @@ public class DriverTransactionDao {
         return transaction;
     }
 
+    public List<DriverTransaction> getDriverTransactionByPlate_no(String driver_id) {
+        List<DriverTransaction> transactions;
+        TypedQuery<DriverTransaction> transactionTypedQuery = entityManager.createQuery(
+                "FROM DriverTransaction WHERE driver_id= :driver_id",DriverTransaction.class
+        );
+        transactionTypedQuery.setParameter("driver_id",driver_id);
+
+        transactions = transactionTypedQuery.getResultList();
+        System.out.println(transactions+" size: "+transactions.size());
+        return transactions;
+    }
 }

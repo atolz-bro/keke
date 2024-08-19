@@ -6,23 +6,28 @@ import jakarta.persistence.*;
 
 @Entity(name = "Student")
 public class Student {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+
+
+
+    @Column
+    String matric_no;
+    String password;
 
     @Column
     String username;
 
     @Column
-    String matric_no;
-
-    @Column
     String email;
-    String password;
+
 
     //@JsonIgnore
     String account_bal;
 
+    @JsonIgnore
     public Long getId() {
         return id;
     }
@@ -65,7 +70,7 @@ public class Student {
         this.account_bal = accountBal;
     }
 
-    //@JsonIgnore
+
     public String getAccount_bal() {
         return account_bal;
     }

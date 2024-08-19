@@ -8,7 +8,6 @@ import com.group1.keke.dao.StudentTransactionDao;
 import com.group1.keke.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,9 +32,12 @@ public class PaymentController {
         this.driverTransactionDao = driverTransactionDao;
     }
     @PostMapping("/student/fundwallet")
-    public ResponseEntity<Student> fundWallet(@RequestBody FundWalletRequest payment, Principal principal){
+    public ResponseEntity<RequestTransaction> fundWallet(@RequestBody FundWalletRequest payment, Principal principal){
         String matric_no = principal.getName();
         Student student = studentDao.findStudentByMatricNo(matric_no);
+        if(student == null){
+            return ResponseEntity.badRequest().body(null);
+        }
         System.out.println("Student Before Fund: "+student);
 
         String amount = payment.getAmount();
@@ -60,11 +62,13 @@ public class PaymentController {
         Transaction transactiondb = studentTransactionDao.findTransactionByTime(currTime);
         System.out.println("Added Transaction in Db" +  transactiondb);
 
-        return ResponseEntity.ok(student);
+        RequestTransaction requestTransaction
+                = new RequestTransaction("Fund Wallet",amount,student.getAccount_bal());
+        return ResponseEntity.ok(requestTransaction);
     }
 
     @PostMapping("/student/transfer")
-    public ResponseEntity<Driver> transferToDriver(@RequestBody TransferRequest transferRequest, Principal principal){
+    public ResponseEntity<RequestTransaction> transferToDriver(@RequestBody TransferRequest transferRequest, Principal principal){
         String matric_no = principal.getName();
         String driver_plate_no = transferRequest.getDriver_plate_no();
         Integer amount = Integer.valueOf(transferRequest.getAmount());
@@ -82,7 +86,7 @@ public class PaymentController {
         //Add Debit Transaction For Student
         String currTime = System.currentTimeMillis()+"";
         Transaction transaction = new Transaction(
-                driver.getUsername(),
+                driver.getPlate_no(),
                 "DEBIT",
                 student.getId()+"",
                 String.valueOf(amount),currTime
@@ -102,14 +106,16 @@ public class PaymentController {
         DriverTransaction driverTransaction = new DriverTransaction(
                 driver.getId()+"",
                 "CREDIT",
-                amount+"",currTime
+                amount+"",currTime,student.getMatric_no()
         );
         driverTransactionDao.saveDriverTransaction(driverTransaction);
         DriverTransaction driverTransactionFromDb = driverTransactionDao.findTransactionByTime(currTime);
         System.out.println("Added Transaction in Driver DB"+driverTransactionFromDb);
 
 
-        return ResponseEntity.ok(driver);
+        RequestTransaction requestTransaction
+                = new RequestTransaction("Transfer To Driver",amount.toString(),student.getAccount_bal());
+        return ResponseEntity.ok(requestTransaction);
 
     }
 

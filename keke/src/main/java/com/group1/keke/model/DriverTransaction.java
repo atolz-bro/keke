@@ -1,5 +1,6 @@
 package com.group1.keke.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,18 +9,23 @@ import jakarta.persistence.Id;
 @Entity(name = "DriverTransaction")
 public class DriverTransaction {
 
+    @JsonIgnore
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+    @JsonIgnore
     String driver_id;
     String type;
     String amount;
     String date;
+    
+    String student_matric_no;
 
-    public DriverTransaction(String driver_id, String type, String amount, String date) {
+    public DriverTransaction( String driver_id, String type, String amount, String date, String student_matric_no) {
         this.driver_id = driver_id;
         this.type = type;
         this.amount = amount;
         this.date = date;
+        this.student_matric_no = student_matric_no;
     }
 
     public DriverTransaction() {
@@ -32,6 +38,14 @@ public class DriverTransaction {
 
     public String getDriver_id() {
         return driver_id;
+    }
+
+    public String getStudent_matric_no() {
+        return student_matric_no;
+    }
+
+    public void setStudent_matric_no(String student_matric_no) {
+        this.student_matric_no = student_matric_no;
     }
 
     public void setDriver_id(String driver_id) {

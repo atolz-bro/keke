@@ -2,6 +2,7 @@ package com.group1.keke.dao;
 
 import com.group1.keke.model.Student;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.apache.juli.logging.Log;
@@ -27,13 +28,19 @@ public class StudentDao {
     public Student findStudentByMatricNo(String matric){
         System.out.println("In find Student by ID");
         Student theStudent;
-        TypedQuery<Student> typedQuery = entityManager.createQuery(
-                "FROM Student WHERE matric_no= :matric", Student.class
-        );
-        System.out.println("In find Student by ID");
-        typedQuery.setParameter("matric",matric);
-        theStudent = typedQuery.getSingleResult();
-        System.out.println("In find Student By matric"+ theStudent);
+        try{
+            TypedQuery<Student> typedQuery = entityManager.createQuery(
+                    "FROM Student WHERE matric_no= :matric", Student.class
+            );
+            System.out.println("In find Student by ID");
+            typedQuery.setParameter("matric",matric);
+            theStudent = typedQuery.getSingleResult();
+            System.out.println("In find Student By matric"+ theStudent);
+
+        }catch (NoResultException nre){
+            theStudent = null;
+        }
+
         return theStudent;
     }
 
