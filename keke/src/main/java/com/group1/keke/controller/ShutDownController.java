@@ -16,7 +16,7 @@ public class ShutDownController {
 
     @PostMapping("/shutdown")
     void shutdown() throws IOException {
-        System.out.println("Shutdown Request");
+        System.out.println("Shutdown Request Hello");
         //SpringApplication.exit(context, () -> 0);
         //String command = "cd C:\\Users\\atola\\OneDrive\\Desktop\\Final Year Project\\Offline_Payment_System\\offlinepaymentsystem && .\\mvnw spring-boot:run";
         //Process process = Runtime.getRuntime().exec(command);
