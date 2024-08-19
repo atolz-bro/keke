@@ -3,6 +3,7 @@ package com.group1.keke.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class ShutDownController {
     @Autowired
     private ApplicationContext context;
 
-    @GetMapping("/shutdown")
+    @PostMapping("/shutdown")
     void shutdown() throws IOException {
         System.out.println("Shutdown Request");
         //SpringApplication.exit(context, () -> 0);
